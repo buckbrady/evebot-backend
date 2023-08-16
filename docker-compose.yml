@@ -2,8 +2,8 @@ version: '3'
 
 networks:
   default:
-    external:
-      name: evebot_services
+    external: true
+    name: evebot_services
 
 services:
   evebot:
