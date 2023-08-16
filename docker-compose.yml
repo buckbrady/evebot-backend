@@ -1,35 +1,11 @@
 version: '3'
 
-volumes:
-  db_data:
+networks:
+  default:
+    external:
+      name: evebot_services
 
 services:
-  postgres:
-    image: postgres:alpine
-    env_file:
-      - .env.compose
-    environment:
-      PG_DATA: /var/lib/postgresql/data
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "5m"
-        max-file: "1"
-
-  redis:
-    image: redis:alpine
-    ports:
-      - 6379:6379
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "5m"
-        max-file: "1"
-
   evebot:
     image: evebot/app
     build:
