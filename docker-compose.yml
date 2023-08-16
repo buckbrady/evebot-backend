@@ -1,0 +1,91 @@
+version: '3'
+
+volumes:
+  db_data:
+
+services:
+  postgres:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: evebot
+      PG_DATA: /var/lib/postgresql/data
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "1"
+
+
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "1"
+
+
+  evebot:
+    image: evebot/app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env.compose
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+      - redis
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "1"
+
+
+  evebot-celery-beat:
+    image: evebot/app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env.compose
+    command: celery -A evebot beat -l info
+    depends_on:
+      - postgres
+      - redis
+      - evebot
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "1"
+
+
+  evebot-celery-worker:
+    image: evebot/app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env.compose
+    command: celery -A evebot worker -l info
+    depends_on:
+      - postgres
+      - redis
+      - evebot
+      - evebot-celery-beat
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "1"

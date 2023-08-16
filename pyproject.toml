@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "evebot"
+version = "0.1.0"
+description = "EVEBot Tools"
+authors = ["Buck Brady <bbrady145@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.11.4"
+django = "^4.2.4"
+psycopg = "^3.1.10"
+django-environ = "^0.10.0"
+django-esi = "^4.0.1"
+django-celery-beat = "^2.5.0"
+celery = "^5.3.1"
+django-celery-results = "^2.5.1"
+django-redis = "^5.3.0"
+uvicorn = "^0.23.2"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.7.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
