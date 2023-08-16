@@ -6,6 +6,8 @@ volumes:
 services:
   postgres:
     image: postgres:alpine
+    env_file:
+      - .env.compose
     environment:
       PG_DATA: /var/lib/postgresql/data
     volumes:
