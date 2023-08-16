@@ -17,6 +17,7 @@ celery = "^5.3.1"
 django-celery-results = "^2.5.1"
 django-redis = "^5.3.0"
 uvicorn = "^0.23.2"
+pyscopg2 = "^66.0.2"
 
 
 [tool.poetry.group.dev.dependencies]

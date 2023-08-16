@@ -863,6 +863,16 @@ files = [
 ]
 
 [[package]]
+name = "pyscopg2"
+version = "66.0.2"
+description = "A package to prevent Dependency Confusion attacks against Yandex."
+optional = false
+python-versions = "*"
+files = [
+    {file = "pyscopg2-66.0.2.tar.gz", hash = "sha256:b987949a25d6f27610e70a6c0a524be3abd4884d21a86d6c74f23fdc690f9508"},
+]
+
+[[package]]
 name = "python-crontab"
 version = "3.0.0"
 description = "Python Crontab API"
@@ -1334,4 +1344,4 @@ tests = ["pytest", "pytest-cov"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.4"
-content-hash = "066a08f20ee6dee5d8d0c756d9603fed9536fcfba3ef7aeb4ac4cd95f40f22ae"
+content-hash = "a7460e4270f90ce745a2a2ceac32ab20d1e079b0eb5148082f275aaf74f8d41d"
