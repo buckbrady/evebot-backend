@@ -6,7 +6,7 @@ from django.conf import settings
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "evebot.settings")
 
-app = Celery("evebot", include=["sync.tasks"])
+app = Celery("evebot", include=["sync.runners"])
 app.conf.enable_utc = True
 
 app.config_from_object(settings, namespace="CELERY")

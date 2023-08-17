@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+
 import environ
 from celery.schedules import crontab
 
@@ -31,12 +32,17 @@ SECRET_KEY = env(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("ENVIRONMENT", default="development") == "development"
 
-ALLOWED_HOSTS = ["localhost:8000", "evebot.tools"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "evebot.tools"]
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost:8000", "https://evebot.tools"]
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "https://evebot.tools",
+]
 
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:8000",
+    "http://127.0.0.1:8000",
     "https://evebot.tools",
 ]
 
@@ -49,11 +55,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_celery_beat",
+    "django_celery_results",
     "esi",
     "models",
     "sync",
-    "django_celery_beat",
-    "django_celery_results",
 ]
 
 MIDDLEWARE = [
@@ -164,7 +170,7 @@ ESI_SSO_CALLBACK_URL = env(
 ESI_USER_CONTACT_EMAIL = env(
     "ESI_USER_CONTACT_EMAIL", default="noreply@development.local"
 )
-ESI_CONNECTION_POOL_MAXSIZE = env("ESI_CONNECTION_POOL_MAXSIZE", default=10)
+ESI_CONNECTION_POOL_MAXSIZE = env("ESI_CONNECTION_POOL_MAXSIZE", default=25)
 
 # Celery settings
 CELERY_BROKER_URL = env("CELERY_BROKER_URL", default="redis://127.0.0.1:6379")
@@ -176,7 +182,7 @@ CELERY_RESULT_EXTENDED = True
 CELERY_CACHE_BACKEND = "django-cache"
 CELERY_TIMEZONE = "UTC"
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
-# CELERY_IMPORTS = ("sync.tasks",)
+# CELERY_IMPORTS = ("sync.runners",)
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 CELERY_BEAT_SCHEDULE = {
     "esi_cleanup_callbackredirect": {
@@ -187,8 +193,108 @@ CELERY_BEAT_SCHEDULE = {
         "task": "esi.tasks.cleanup_token",
         "schedule": crontab(day_of_month="*/1"),
     },
+    # ESI Status Tasks
     "server_status": {
-        "task": "sync.tasks.server_status",
+        "task": "sync.tasks.status_status",
         "schedule": crontab(minute="*/1"),
+    },
+    # ESI Universe Tasks
+    "universe_ancestry": {
+        "task": "sync.tasks.universe_ancestry",
+        "schedule": crontab(minute="10", hour="11"),
+        "options": {"queue": "background"},
+    },
+    "universe_astroid_belt": {
+        "task": "sync.tasks.universe_astroid_belt",
+        "schedule": crontab(minute="10", hour="11"),
+        "options": {"queue": "background"},
+    },
+    "universe_bloodline": {
+        "task": "sync.tasks.universe_bloodline",
+        "schedule": crontab(minute="10", hour="11"),
+        "options": {"queue": "background"},
+    },
+    "universe_category": {
+        "task": "sync.tasks.universe_category",
+        "schedule": crontab(minute="10", hour="11"),
+        "options": {"queue": "background"},
+    },
+    "universe_constellation": {
+        "task": "sync.tasks.universe_constellation",
+        "schedule": crontab(minute="10", hour="11"),
+        "options": {"queue": "background"},
+    },
+    "universe_faction": {
+        "task": "sync.tasks.universe_faction",
+        "schedule": crontab(minute="10", hour="11"),
+        "options": {"queue": "background"},
+    },
+    "universe_graphics": {
+        "task": "sync.tasks.universe_graphics",
+        "schedule": crontab(minute="10", hour="11"),
+        "options": {"queue": "background"},
+    },
+    "universe_group": {
+        "task": "sync.tasks.universe_group",
+        "schedule": crontab(minute="10", hour="11"),
+        "options": {"queue": "background"},
+    },
+    "universe_moon": {
+        "task": "sync.tasks.universe_moon",
+        "schedule": crontab(minute="10", hour="11"),
+        "options": {"queue": "background"},
+    },
+    "universe_planet": {
+        "task": "sync.tasks.universe_planet",
+        "schedule": crontab(minute="10", hour="11"),
+        "options": {"queue": "background"},
+    },
+    "universe_race": {
+        "task": "sync.tasks.universe_race",
+        "schedule": crontab(minute="10", hour="11"),
+        "options": {"queue": "background"},
+    },
+    "universe_region": {
+        "task": "sync.tasks.universe_region",
+        "schedule": crontab(minute="10", hour="11"),
+        "options": {"queue": "background"},
+    },
+    "universe_stargate": {
+        "task": "sync.tasks.universe_stargate",
+        "schedule": crontab(minute="10", hour="11"),
+        "options": {"queue": "background"},
+    },
+    "universe_star": {
+        "task": "sync.tasks.universe_star",
+        "schedule": crontab(minute="10", hour="11"),
+        "options": {"queue": "background"},
+    },
+    "universe_station": {
+        "task": "sync.tasks.universe_station",
+        "schedule": crontab(minute="10", hour="11"),
+        "options": {"queue": "background"},
+    },
+    "universe_structure": {
+        "task": "sync.tasks.universe_structure",
+        "schedule": 3600,
+        # TODO: Add realtime queue
+    },
+    "universe_system": {
+        "task": "sync.tasks.universe_system",
+        "schedule": crontab(minute="10", hour="11"),
+        "options": {"queue": "background"},
+    },
+    "universe_system_jumps": {
+        "task": "sync.tasks.universe_system_jumps",
+        "schedule": 3600,
+    },
+    "universe_system_kills": {
+        "task": "sync.tasks.universe_system_kills",
+        "schedule": 3600,
+    },
+    "universe_type": {
+        "task": "sync.tasks.universe_type",
+        "schedule": crontab(minute="10", hour="11"),
+        "options": {"queue": "background"},
     },
 }

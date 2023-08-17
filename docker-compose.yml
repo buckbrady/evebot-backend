@@ -58,3 +58,37 @@ services:
       options:
         max-size: "5m"
         max-file: "1"
+
+  evebot-celery-worker-universe:
+    image: evebot/app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A evebot worker -l info -P eventlet -c 100 -Q universe
+    env_file:
+      - .env.compose
+    depends_on:
+      - evebot
+      - evebot-celery-beat
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "1"
+
+  evebot-celery-worker-realtime:
+    image: evebot/app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A evebot worker -l info -P eventlet -c 100 -Q realtime
+    env_file:
+      - .env.compose
+    depends_on:
+      - evebot
+      - evebot-celery-beat
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "1"
