@@ -40,7 +40,6 @@ services:
         max-size: "5m"
         max-file: "1"
 
-
   evebot-celery-worker:
     image: evebot/app
     build:
@@ -87,6 +86,27 @@ services:
     depends_on:
       - evebot
       - evebot-celery-beat
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "1"
+
+  evebot-celery-flower:
+    image: evebot/app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env.compose
+    environment:
+      ENTRY_APP: flower
+    depends_on:
+      - evebot
+      - evebot-celery-beat
+      - evebot-celery-worker
+      - evebot-celery-worker-universe
+      - evebot-celery-worker-realtime
     logging:
       driver: "json-file"
       options:
