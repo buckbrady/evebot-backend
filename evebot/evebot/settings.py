@@ -202,77 +202,62 @@ CELERY_BEAT_SCHEDULE = {
     "universe_ancestry": {
         "task": "sync.tasks.universe_ancestry",
         "schedule": crontab(minute="10", hour="11"),
-        "options": {"queue": "background"},
     },
     "universe_astroid_belt": {
         "task": "sync.tasks.universe_astroid_belt",
         "schedule": crontab(minute="10", hour="11"),
-        "options": {"queue": "background"},
     },
     "universe_bloodline": {
         "task": "sync.tasks.universe_bloodline",
         "schedule": crontab(minute="10", hour="11"),
-        "options": {"queue": "background"},
     },
     "universe_category": {
         "task": "sync.tasks.universe_category",
         "schedule": crontab(minute="10", hour="11"),
-        "options": {"queue": "background"},
     },
     "universe_constellation": {
         "task": "sync.tasks.universe_constellation",
         "schedule": crontab(minute="10", hour="11"),
-        "options": {"queue": "background"},
     },
     "universe_faction": {
         "task": "sync.tasks.universe_faction",
         "schedule": crontab(minute="10", hour="11"),
-        "options": {"queue": "background"},
     },
     "universe_graphics": {
         "task": "sync.tasks.universe_graphics",
         "schedule": crontab(minute="10", hour="11"),
-        "options": {"queue": "background"},
     },
     "universe_group": {
         "task": "sync.tasks.universe_group",
         "schedule": crontab(minute="10", hour="11"),
-        "options": {"queue": "background"},
     },
     "universe_moon": {
         "task": "sync.tasks.universe_moon",
         "schedule": crontab(minute="10", hour="11"),
-        "options": {"queue": "background"},
     },
     "universe_planet": {
         "task": "sync.tasks.universe_planet",
         "schedule": crontab(minute="10", hour="11"),
-        "options": {"queue": "background"},
     },
     "universe_race": {
         "task": "sync.tasks.universe_race",
         "schedule": crontab(minute="10", hour="11"),
-        "options": {"queue": "background"},
     },
     "universe_region": {
         "task": "sync.tasks.universe_region",
         "schedule": crontab(minute="10", hour="11"),
-        "options": {"queue": "background"},
     },
     "universe_stargate": {
         "task": "sync.tasks.universe_stargate",
         "schedule": crontab(minute="10", hour="11"),
-        "options": {"queue": "background"},
     },
     "universe_star": {
         "task": "sync.tasks.universe_star",
         "schedule": crontab(minute="10", hour="11"),
-        "options": {"queue": "background"},
     },
     "universe_station": {
         "task": "sync.tasks.universe_station",
         "schedule": crontab(minute="10", hour="11"),
-        "options": {"queue": "background"},
     },
     "universe_structure": {
         "task": "sync.tasks.universe_structure",
@@ -282,7 +267,6 @@ CELERY_BEAT_SCHEDULE = {
     "universe_system": {
         "task": "sync.tasks.universe_system",
         "schedule": crontab(minute="10", hour="11"),
-        "options": {"queue": "background"},
     },
     "universe_system_jumps": {
         "task": "sync.tasks.universe_system_jumps",
@@ -295,6 +279,5 @@ CELERY_BEAT_SCHEDULE = {
     "universe_type": {
         "task": "sync.tasks.universe_type",
         "schedule": crontab(minute="10", hour="11"),
-        "options": {"queue": "background"},
     },
 }

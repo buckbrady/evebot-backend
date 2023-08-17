@@ -209,7 +209,7 @@ def universe_type():
     logger.info("Finished universe type sync")
 
 
-@shared_task(queue="background")
+@shared_task
 def universe_type_process(type_id):
     """
     Get universe type from ESI
