@@ -7,7 +7,7 @@ elif [ "$ENTRY_APP" == "worker" ]; then
 elif [ "$ENTRY_APP" == "beat" ]; then
   celery -A evebot beat -l info
 elif [ "$ENTRY_APP" == "flower" ]; then
-  celery -A evebot flower
+  celery -A evebot flower --url_prefix=flower --port=5555
 else
   echo "No entrypoint specified"
 fi
