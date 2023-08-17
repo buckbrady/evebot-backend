@@ -101,6 +101,8 @@ services:
       - .env.compose
     environment:
       ENTRY_APP: flower
+    ports:
+      - 5555:5555
     depends_on:
       - evebot
       - evebot-celery-beat
